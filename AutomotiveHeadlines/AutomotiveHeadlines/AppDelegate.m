@@ -7,7 +7,11 @@
 //
 
 #import "AppDelegate.h"
-
+#import "ViewControllerInfo.h"
+#import "ViewControllerTest.h"
+#import "ViewControllerSelect.h"
+#import "ViewControllerMine.h"
+#import "UIColor+Hex.h"
 @interface AppDelegate ()
 
 @end
@@ -18,9 +22,49 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
-    self.window.rootViewController = [[UIViewController alloc]init];
+    [self setUpTabBarItemTextAttributes];
+    UITabBarController *tabCtr = [[UITabBarController alloc]init];
+    
+    
+    
+    ViewControllerInfo *VCInfo = [[ViewControllerInfo alloc]init];
+    
+    VCInfo.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"消息" image:[UIImage imageNamed:@"Tabbar1_22x22_"] selectedImage:[[UIImage imageNamed:@"TabbarS1_22x22_"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    
+    ViewControllerTest *VCTest = [[ViewControllerTest alloc]init];
+    
+    VCTest.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"众测" image:[UIImage imageNamed:@"Tabbar2_22x22_" ] selectedImage:[[UIImage imageNamed:@"TabbarS2_22x22_"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    ViewControllerSelect *VCSelect = [[ViewControllerSelect alloc]init];
+    
+    VCSelect.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"选车" image:[UIImage imageNamed:@"Tabbar3_22x22_" ] selectedImage:[[UIImage imageNamed:@"TabbarS3_22x22_"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    
+    
+    ViewControllerMine *VCMine = [[ViewControllerMine alloc]init];
+    
+    VCMine.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"我的" image:[UIImage imageNamed:@"Tabbar4_22x22_" ] selectedImage:[[UIImage imageNamed:@"TabbarS4_22x22_"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    
+    
+    tabCtr.viewControllers = @[VCInfo,VCTest,VCSelect,VCMine];
+    
+    
+    self.window.rootViewController = tabCtr;
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+//设置文字颜色
+-(void)setUpTabBarItemTextAttributes
+{
+    NSMutableDictionary *normalAttrs = [NSMutableDictionary dictionary];
+    normalAttrs[NSForegroundColorAttributeName] = [UIColor colorWithHexString:@"#7e7e7e"];
+    
+    NSMutableDictionary *selectedAttrs = [NSMutableDictionary dictionary];
+    selectedAttrs[NSForegroundColorAttributeName] = [UIColor colorWithHexString:@"#17abc1"];
+    
+    //设置文字属性
+    UITabBarItem *tabBar =[UITabBarItem appearance];
+    [tabBar setTitleTextAttributes:normalAttrs forState:UIControlStateNormal];
+    [tabBar setTitleTextAttributes:selectedAttrs forState:UIControlStateSelected];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
